@@ -1,0 +1,82 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bluros.updater"
+    android:versionCode="4"
+    android:versionName="2.3" >
+
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="22" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.REBOOT"/>
+    <uses-permission android:name="android.permission.RECOVERY"/>
+    <uses-permission android:name="android.permission.ACCESS_CACHE_FILESYSTEM"/>
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:theme="@style/Theme.Main"
+        android:label="@string/app_name"
+        android:name="com.bluros.updater.UpdateApplication"
+        android:supportsRtl="true">
+
+        <activity
+            android:name=".UpdatesSettings"
+            android:launchMode="singleTop"
+            android:hardwareAccelerated="true"
+            android:label="@string/display_name"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.settings.SHORTCUT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".UpdatesSettingsTv"
+            android:theme="@style/Theme.Tv"
+            android:launchMode="singleTop"
+            android:hardwareAccelerated="true"
+            android:label="@string/display_name"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.bluros.updater.service.UpdateCheckService" />
+        <service android:name="com.bluros.updater.service.DownloadService" />
+        <service android:name="com.bluros.updater.service.DownloadCompleteIntentService" />
+
+        <receiver android:name="com.bluros.updater.receiver.UpdateCheckReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.bluros.updater.receiver.DownloadReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+                <action android:name="com.bluros.cmupdater.action.START_DOWNLOAD"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.bluros.updater.receiver.NotificationClickReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
