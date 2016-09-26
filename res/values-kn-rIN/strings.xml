@@ -9,7 +9,7 @@
      or at https://www.gnu.org/licenses/gpl-2.0.txt
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">CM ನವೀಕರಣಕರ್ತ</string>
+  <string name="app_name">BlurOS ನವೀಕರಣಕರ್ತ</string>
   <string name="display_name">ನವೀಕರಣೆಗಳು</string>
   <string name="unknown">ಅಜ್ಞಾತ</string>
   <string name="menu_refresh">ರಿಫ್ರೆಶ್</string>

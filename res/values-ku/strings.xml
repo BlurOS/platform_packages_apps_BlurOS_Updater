@@ -9,7 +9,7 @@
      or at https://www.gnu.org/licenses/gpl-2.0.txt
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">CM نوێکەرەوەی</string>
+  <string name="app_name">BlurOS نوێکەرەوەی</string>
   <string name="display_name">نوێکردنەوەکان</string>
   <string name="unknown">نەزانراو</string>
   <string name="menu_refresh">تازەکردنەوە</string>

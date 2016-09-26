@@ -9,7 +9,7 @@
      or at https://www.gnu.org/licenses/gpl-2.0.txt
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">CM 업데이터</string>
+  <string name="app_name">BlurOS 업데이터</string>
   <string name="display_name">업데이트</string>
   <string name="unknown">알 수 없음</string>
   <string name="menu_refresh">새로 고침</string>

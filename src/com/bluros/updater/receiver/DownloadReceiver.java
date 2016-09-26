@@ -31,12 +31,12 @@ import java.io.IOException;
 public class DownloadReceiver extends BroadcastReceiver{
     private static final String TAG = "DownloadReceiver";
 
-    public static final String ACTION_START_DOWNLOAD = "com.bluros.cmupdater.action.START_DOWNLOAD";
+    public static final String ACTION_START_DOWNLOAD = "com.bluros.blurosupdater.action.START_DOWNLOAD";
     public static final String EXTRA_UPDATE_INFO = "update_info";
 
-    public static final String ACTION_DOWNLOAD_STARTED = "com.bluros.cmupdater.action.DOWNLOAD_STARTED";
+    public static final String ACTION_DOWNLOAD_STARTED = "com.bluros.blurosupdater.action.DOWNLOAD_STARTED";
 
-    static final String ACTION_INSTALL_UPDATE = "com.bluros.cmupdater.action.INSTALL_UPDATE";
+    static final String ACTION_INSTALL_UPDATE = "com.bluros.blurosupdater.action.INSTALL_UPDATE";
     static final String EXTRA_FILENAME = "filename";
 
     @Override

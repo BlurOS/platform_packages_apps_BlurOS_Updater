@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONObject;
 
+import com.android.volley.Request;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class UpdatesJsonObjectRequest extends JsonObjectRequest {
 
     public UpdatesJsonObjectRequest(String url, String userAgent, JSONObject jsonRequest,
             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        super(url, jsonRequest, listener, errorListener);
+        super(Request.Method.GET, url, jsonRequest, listener, errorListener);
         mUserAgent = userAgent;
     }
 

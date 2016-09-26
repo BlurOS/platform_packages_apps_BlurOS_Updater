@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The 2016 BlurOS Project
+ * Copyright (C) 2016 BlurOS Project
  *
  * * Licensed under the GNU GPLv2 license
  *
@@ -43,7 +43,7 @@ public class Utils {
     }
 
     public static File makeUpdateFolder() {
-        return new File(Environment.getExternalStorageDirectory().getAbsolutePath(),
+        return new File(Environment.getExternalStorageDirectory(),
                 Constants.UPDATES_FOLDER);
     }
 
@@ -55,11 +55,11 @@ public class Utils {
     }
 
     public static String getDeviceType() {
-        return SystemProperties.get("ro.cm.device");
+        return SystemProperties.get("ro.bluros.device");
     }
 
     public static String getInstalledVersion() {
-        return SystemProperties.get("ro.cm.version");
+        return SystemProperties.get("ro.bluros.version");
     }
 
     public static int getInstalledApiLevel() {
@@ -113,76 +113,26 @@ public class Utils {
     }
 
     public static void triggerUpdate(Context context, String updateFileName) throws IOException {
-        /*
-         * Should perform the following steps.
-         * 1.- mkdir -p /cache/recovery
-         * 2.- echo 'boot-recovery' > /cache/recovery/command
-         * 3.- if(mBackup) echo '--nandroid'  >> /cache/recovery/command
-         * 4.- echo '--update_package=SDCARD:update.zip' >> /cache/recovery/command
-         * 5.- reboot recovery
-         */
-
-        // Set the 'boot recovery' command
-        Process p = Runtime.getRuntime().exec("sh");
-        OutputStream os = p.getOutputStream();
-        os.write("mkdir -p /cache/recovery/\n".getBytes());
-        os.write("echo 'boot-recovery' >/cache/recovery/command\n".getBytes());
-
-        // See if backups are enabled and add the nandroid flag
-        /* TODO: add this back once we have a way of doing backups that is not recovery specific
-           if (mPrefs.getBoolean(Constants.BACKUP_PREF, true)) {
-           os.write("echo '--nandroid'  >> /cache/recovery/command\n".getBytes());
-           }
-           */
-
         // Add the update folder/file name
-        // Emulated external storage moved to user-specific paths in 4.2
-        String userPath = Environment.isExternalStorageEmulated() ? ("/" + UserHandle.myUserId()) : "";
+        File primaryStorage = Environment.getExternalStorageDirectory();
+        // If the path is emulated, translate it, if not return the original path
+        String updatePath = Environment.maybeTranslateEmulatedPathToInternal(
+                primaryStorage).getAbsolutePath();
+        // Create the path for the update package
+        String updatePackagePath = updatePath + "/" + Constants.UPDATES_FOLDER + "/" + updateFileName;
 
-        String cmd = "echo '--update_package=" + getStorageMountpoint(context) + userPath
-            + "/" + Constants.UPDATES_FOLDER + "/" + updateFileName
-            + "' >> /cache/recovery/command\n";
-        os.write(cmd.getBytes());
-        os.flush();
+        /*
+         * maybeTranslateEmulatedPathToInternal requires that we have a full path to a file (not just
+         * a directory) and have read access to the file via both the emulated and actual paths.  As
+         * this is currently done, we lack the ability to read the file via the actual path, so the
+         * translation ends up failing.  Until this is all updated to download and store the file in
+         * a sane way, manually perform the translation that is needed in order for uncrypt to be
+         * able to find the file.
+         */
+        updatePackagePath = updatePackagePath.replace("storage/emulated", "data/media");
 
-        // Trigger the reboot
-        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        powerManager.reboot("recovery");
-    }
-
-    private static String getStorageMountpoint(Context context) {
-        StorageManager sm = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
-        StorageVolume[] volumes = sm.getVolumeList();
-        String primaryStoragePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        boolean alternateIsInternal = context.getResources().getBoolean(R.bool.alternateIsInternal);
-
-        if (volumes.length <= 1) {
-            // single storage, assume only /sdcard exists
-            return "/sdcard";
-        }
-
-        for (int i = 0; i < volumes.length; i++) {
-            StorageVolume v = volumes[i];
-            if (v.getPath().equals(primaryStoragePath)) {
-                /* This is the primary storage, where we stored the update file
-                 *
-                 * For CM10, a non-removable storage (partition or FUSE)
-                 * will always be primary. But we have older recoveries out there
-                 * in which /sdcard is the microSD, and the internal partition is
-                 * mounted at /emmc.
-                 *
-                 * At buildtime, we try to automagically guess from recovery.fstab
-                 * what's the recovery configuration for this device. If "/emmc"
-                 * exists, and the primary isn't removable, we assume it will be
-                 * mounted there.
-                 */
-                if (!v.isRemovable() && alternateIsInternal) {
-                    return "/emmc";
-                }
-            };
-        }
-        // Not found, assume non-alternate
-        return "/sdcard";
+        // Reboot into recovery and trigger the update
+        android.os.RecoverySystem.installPackage(context, new File(updatePackagePath));
     }
 
     public static int getUpdateType() {

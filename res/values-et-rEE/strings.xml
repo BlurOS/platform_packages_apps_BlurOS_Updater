@@ -9,7 +9,7 @@
      or at https://www.gnu.org/licenses/gpl-2.0.txt
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">CM Uuendaja</string>
+  <string name="app_name">BlurOS Uuendaja</string>
   <string name="display_name">Uuendused</string>
   <string name="unknown">Teadmata</string>
   <string name="menu_refresh">Värskenda</string>

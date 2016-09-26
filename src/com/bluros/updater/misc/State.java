@@ -23,7 +23,7 @@ import java.util.LinkedList;
 
 public class State {
     private static final String TAG = "State";
-    private static final String FILENAME = "cmupdater.state";
+    private static final String FILENAME = "blurosupdater.state";
 
     public static void saveState(Context context, LinkedList<UpdateInfo> availableUpdates) {
         ObjectOutputStream oos = null;

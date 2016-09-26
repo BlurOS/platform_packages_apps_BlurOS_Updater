@@ -57,11 +57,11 @@ public class UpdateCheckService extends IntentService
     private static final boolean TESTING_DOWNLOAD = false;
 
     // request actions
-    public static final String ACTION_CHECK = "com.bluros.cmupdater.action.CHECK";
-    public static final String ACTION_CANCEL_CHECK = "com.bluros.cmupdater.action.CANCEL_CHECK";
+    public static final String ACTION_CHECK = "com.bluros.blurosupdater.action.CHECK";
+    public static final String ACTION_CANCEL_CHECK = "com.bluros.blurosupdater.action.CANCEL_CHECK";
 
     // broadcast actions
-    public static final String ACTION_CHECK_FINISHED = "com.bluros.cmupdater.action.UPDATE_CHECK_FINISHED";
+    public static final String ACTION_CHECK_FINISHED = "com.bluros.blurosupdater.action.UPDATE_CHECK_FINISHED";
     // extra for ACTION_CHECK_FINISHED: total amount of found updates
     public static final String EXTRA_UPDATE_COUNT = "update_count";
     // extra for ACTION_CHECK_FINISHED: amount of updates that are newer than what is installed
@@ -203,7 +203,7 @@ public class UpdateCheckService extends IntentService
     }
 
     private URI getServerURI() {
-        String propertyUpdateUri = SystemProperties.get("cm.updater.uri");
+        String propertyUpdateUri = SystemProperties.get("bluros.updater.uri");
         if (!TextUtils.isEmpty(propertyUpdateUri)) {
             return URI.create(propertyUpdateUri);
         }
