@@ -10,5 +10,5 @@
     <!-- CMUpdate Config Strings -->
     <string name="conf_update_server_url_def" translatable="false">https://raw.githubusercontent.com/BlurOS/BlurOS-Updater-API/master/api.json</string>
     <string name="conf_changelog_url" translatable="false">https://raw.githubusercontent.com/BlurOS/BlurOS-Updater-API/master/changelog.xml</string>
-    <bool name="alternateIsInternal">false</bool>
+    <bool name="alternateIsInternal">true</bool>
 </resources>
