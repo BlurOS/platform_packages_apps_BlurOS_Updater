@@ -70,4 +70,7 @@
   <string name="no_changelog_alert">Không có nhật ký thay đổi</string>
   <string name="changelog_dialog_title">Nhật ký thay đổi</string>
   <string name="loading_changelog">Đang tải\u2026</string>
+  
+    <string name="permission_not_granted_dialog_title">Quyền chưa được cấp</string>
+    <string name="permission_not_granted_dialog_message">yêu cầu bắt buộc cấp quyền để thực hiện cập nhật OTA.</string>
 </resources>
